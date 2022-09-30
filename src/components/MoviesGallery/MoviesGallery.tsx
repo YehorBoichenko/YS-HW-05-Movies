@@ -1,9 +1,10 @@
 import React from 'react';
-import MoviesGalleryItem from './MoviesGalleryItem';
+import { MoviesGalleryItem } from './MoviesGalleryItem';
 import styles from '../MoviesGallery/MoviesGallery.module.css';
-import PropTypes from 'prop-types';
+import { IData } from '../../interfaces';
+// import PropTypes from 'prop-types';
 
-export default function MoviesGallery({ movies }) {
+export const MoviesGallery = ({ movies }:{ movies: Partial<IData>[] }) => {
   return (
     <div className={styles.MoviesGallery}>
       <ul className={styles.MoviesGalleryList}>
@@ -13,8 +14,8 @@ export default function MoviesGallery({ movies }) {
       </ul>
     </div>
   );
-}
-
-MoviesGallery.propTypes = {
-  movies: PropTypes.array.isRequired,
 };
+
+// MoviesGallery.propTypes = {
+//   movies: PropTypes.array.isRequired,
+// };

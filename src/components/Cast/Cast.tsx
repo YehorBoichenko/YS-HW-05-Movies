@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react';
-import * as fetchAPI from '../../API/MoviesApi';
+import React,{ useState, useEffect } from 'react';
+import { fetchCast } from '../../API/MoviesApi';
 import styles from '../Cast/Cast.module.css';
 import { useParams } from 'react-router-dom';
+import {ICast} from '../../interfaces'
 
 // import photo from '../../images/NotFound.png';
-export default function Cast() {
-  const [cast, setCast] = useState([]);
+export const Cast = (): JSX.Element => {
+  const [credits, setCredits] = useState<{cast:Partial<ICast>[]}>();
   const { movieId } = useParams();
   useEffect(() => {
-    fetchAPI.fetchCast(movieId).then(setCast);
-  }, [movieId]);
-  return (
-    <ul className={styles.cast}>
-      {cast && cast.length > 0 ? (
-        cast.map(({ id, profile_path, name, character }) => (
+fetchCast(movieId).then(({data}) => setCredits(data))
+  },[movieId])
+
+    return (<>{ credits && <ul className={styles.cast}>
+      {credits.cast && credits.cast.length > 0 ? (
+        credits.cast.map(({ id, profile_path, name, character }) => (
           <li key={id} className={styles.Castitem}>
             <img
               src={
@@ -24,13 +25,13 @@ export default function Cast() {
               alt={name}
               className={styles.Castphoto}
             />
-            <p className={styles.Castname}>{name}</p>
-            <p className={styles.Moviecharacter}>{character}</p>
+            <p>{styles.Castname}</p>
+            <p>{styles.Moviecharacter}</p>
           </li>
         ))
       ) : (
         <b>Nothing was found!</b>
       )}
-    </ul>
-  );
-}
+    </ul> }</>)
+
+};

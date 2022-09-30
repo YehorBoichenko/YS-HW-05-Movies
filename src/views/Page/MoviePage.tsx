@@ -1,19 +1,20 @@
 import { useState, useEffect, Suspense } from 'react';
 import { Outlet, Link, useParams, useLocation } from 'react-router-dom';
-import LoaderSpinner from '../../components/Loader/Loader';
-import MovieDetails from '../../components/MovieDetails/MovieDetails';
-import * as fetchAPI from '../../API/MoviesApi';
+import {LoaderSpinner} from '../../components/Loader/Loader';
+import {MovieDetails} from '../../components/MovieDetails/MovieDetails';
+import { fetchMoviesId} from '../../API/MoviesApi';
 import styles from '../Page/MoviePage.module.css';
 import { ButtonLinkStyled } from './Btn.styled';
+import React from 'react';
+import { IData } from '../../interfaces';
 
-export default function MoviePage() {
-  // const navigate = useNavigate();
+ const  MoviePage = (): JSX.Element =>{
   const location = useLocation();
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState<Partial<IData>>();
   const { movieId } = useParams();
   // const { url } = useMatch();
   useEffect(() => {
-    fetchAPI.fetchMoviesId(movieId).then(setMovie);
+fetchMoviesId(movieId).then(({ data }) => setMovie(data));
   }, [movieId]);
 
   // const goBack = () => {
@@ -26,7 +27,7 @@ export default function MoviePage() {
   return (
     <>
       <ButtonLinkStyled
-        to={location?.state?.from ?? '/'}
+        to={location?.state ?? '/'}
         type="button"
         className={styles.button}
       >
@@ -41,7 +42,7 @@ export default function MoviePage() {
               to={{
                 pathname: `/movies/${movieId}/cast`,
               }}
-              state={{ from: location.state?.from }}
+              state={{ from: location.state }}
               className={styles.link}
             >
               Cast
@@ -50,7 +51,7 @@ export default function MoviePage() {
               to={{
                 pathname: `/movies/${movieId}/reviews`,
               }}
-              state={{ from: location.state?.from }}
+              state={{ from: location.state }}
               className={styles.link}
             >
               Reviews
@@ -64,3 +65,5 @@ export default function MoviePage() {
     </>
   );
 }
+
+export default MoviePage

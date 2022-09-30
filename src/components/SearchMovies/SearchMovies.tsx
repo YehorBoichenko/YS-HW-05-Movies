@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import styles from '../SearchMovies/Searchbar.module.css';
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
-export default function SearchMovies({ onSubmit }) {
+export const SearchMovies = ({ onSubmit }: {onSubmit: (arg: string) => void}): JSX.Element => {
   const [query, setQuery] = useState('');
-  const handleChanger = event => {
+  const handleChanger = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.currentTarget.value.toLowerCase());
   };
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (query.trim() === '') {
       toast.error('Please enter search query');
@@ -35,8 +34,8 @@ export default function SearchMovies({ onSubmit }) {
       </form>
     </header>
   );
-}
-
-SearchMovies.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
+
+// SearchMovies.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };

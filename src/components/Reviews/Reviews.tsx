@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as fetchAPI from '../../API/MoviesApi';
 import styles from '../Reviews/Reviews.module.css';
 
-export default function Reviews() {
-  const [results, setReviews] = useState([]);
-  const { movieId } = useParams();
+export const Reviews = (): JSX.Element => {
+  const [results, setReviews] = useState<{reviews: {id:number, author: string, content:string}[]}>();
+  const { movieId } = useParams<string>();
 
   useEffect(() => {
     fetchAPI.fetchMoviesByReviews(movieId).then(setReviews);
@@ -14,8 +14,8 @@ export default function Reviews() {
   return (
     <>
       <ul>
-        {results && results.length > 0 ? (
-          results.map(result => (
+        {results && results.reviews.length > 0 ? (
+          results.reviews.map(result => (
             <li key={result.id} className={styles.reviewCard}>
               <div className={styles.imagesSection}>
                 <b>{result.author}:</b>
@@ -29,4 +29,4 @@ export default function Reviews() {
       </ul>
     </>
   );
-}
+};

@@ -1,6 +1,9 @@
+import React from 'react';
+import { IData } from '../../interfaces';
 import styles from '../MovieDetails/MovieDetails.module.css';
 
-export default function MovieDetails({ movie }) {
+export const MovieDetails = ({ movie }: { movie: Partial<IData>}): JSX.Element => {
+
   return (
     <div className={styles.wrapper}>
       <img
@@ -21,10 +24,10 @@ export default function MovieDetails({ movie }) {
         <p className={styles.infoItem}>
           Genres:
           <span className={styles.infoSum}>
-            {movie.genres.map(genre => genre.name).join('/')}
+            {movie.genres?.map((genre: { name: string; }) => genre.name).join('/')}
           </span>
         </p>
       </div>
     </div>
   );
-}
+};

@@ -1,23 +1,23 @@
+import React from "react";
 import { Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import LoaderSpinner from './Loader/Loader';
+import { LoaderSpinner } from './Loader/Loader';
 import AppBar from './AppBar/AppBar';
-import Container from './Container/Container';
+import { Container } from './Container/Container';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import styles from '../components/App.module.css';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews/Reviews';
+import { Cast } from './Cast/Cast';
+import { Reviews } from './Reviews/Reviews';
 
 const HomePage = lazy(() => import('../views/HomePage'));
 const PageSearch = lazy(() => import('../views/PageSearch/PageSearch'));
 const Moviepage = lazy(() => import('../views/Page/MoviePage'));
 const NotFound = lazy(() => import('../views/Page/NotFound'));
 
-export default function App() {
+export const App = (): JSX.Element => {
   return (
     <Container>
-      <AppBar className={styles.header} />
+      <AppBar/>
       <Suspense fallback={<LoaderSpinner />}>
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
@@ -39,4 +39,4 @@ export default function App() {
       />
     </Container>
   );
-}
+};

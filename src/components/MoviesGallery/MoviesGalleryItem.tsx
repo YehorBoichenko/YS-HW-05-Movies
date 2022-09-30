@@ -1,9 +1,13 @@
 import React from 'react';
 import styles from '../MoviesGallery/MoviesGallery.module.css';
 import { Link, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { IData } from '../../interfaces';
+// import PropTypes from 'prop-types';
 
-export default function MoviesGalleryItem({ movie }) {
+export const MoviesGalleryItem = ({
+  movie,
+}: {movie: Partial<IData>
+}): JSX.Element => {
   const location = useLocation();
 
   return (
@@ -25,8 +29,8 @@ export default function MoviesGalleryItem({ movie }) {
       </Link>
     </li>
   );
-}
-
-MoviesGalleryItem.propTypes = {
-  movie: PropTypes.object.isRequired,
 };
+
+// MoviesGalleryItem.propTypes = {
+//   movie: PropTypes.object.isRequired,
+// };
